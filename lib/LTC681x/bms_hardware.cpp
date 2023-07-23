@@ -43,18 +43,16 @@ Copyright 2017 Linear Technology Corp. (LTC)
 #include <Arduino.h>
 #include <stdint.h>
 #include "bms_hardware.h"
-#include "Linduino.h"
-#include "LT_SPI.h"
 #include <SPI.h>
 
 void cs_low(uint8_t pin)
 {
-  output_low(pin);
+  digitalWrite(pin, LOW);
 }
 
 void cs_high(uint8_t pin)
 {
-  output_high(pin);
+  digitalWrite(pin, HIGH);
 }
 
 void delay_u(uint16_t micro)

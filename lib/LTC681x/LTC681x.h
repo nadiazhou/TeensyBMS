@@ -46,15 +46,6 @@
 #define LTC681x_h
 #include <stdint.h>
 #include <Arduino.h>
-#define LINDUINO
-
-#ifdef MBED
-#include "mbed.h"//remove when using with LINDUINO
-#endif
-
-#ifdef LINDUINO
-#include <Arduino.h>
-#endif
 
 #define IC_LTC6813
 

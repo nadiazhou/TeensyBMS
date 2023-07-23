@@ -46,10 +46,6 @@
 #include "LTC681x.h"
 #include "bms_hardware.h"
 
-#ifdef LINDUINO
-#include <Arduino.h>
-#endif
-
 /* Wake isoSPI up from IDlE state and enters the READY state */
 void wakeup_idle(uint8_t total_ic) //Number of ICs in the system
 {

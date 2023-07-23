@@ -72,8 +72,6 @@ In this sketch book:
 #include <Arduino.h>
 #include <stdint.h>
 #include <SPI.h>
-#include "Linduino.h"
-#include "LT_SPI.h"
 #include "UserInterface.h"
 #include "LTC681x.h"
 #include "LTC6813.h"
@@ -121,11 +119,25 @@ void serial_print_hex(uint8_t data);
 char read_hex(void); 
 char get_char(void);
 
+/**************** Added Functions *******************/
+void run_command(uint32_t cmd);
+
+void SPI_connect(void)
+{
+  // set chip select pin to output (chip select pin is active low)
+  pinMode(SS, OUTPUT);
+  digitalWrite(SS, HIGH);
+
+  // begin SPI communication and set clock to 1 MHz
+  SPI.begin();
+  SPI.setClockDivider(SPI_CLOCK_DIV16);
+}
+
 /*******************************************************************
   Setup Variables
   The following variables can be modified to configure the software.
 ********************************************************************/
-const uint8_t TOTAL_IC = 2;//!< Number of ICs in the daisy chain
+const uint8_t TOTAL_IC = 1;//!< Number of ICs in the daisy chain
 
 /********************************************************************
  ADC Command Configurations. See LTC681x.h for options
@@ -189,8 +201,7 @@ bool PSBITS[2]= {false,false}; //!< Digital Redundancy Path Selection//ps-0,1
 void setup()
 {
   Serial.begin(115200);
-  quikeval_SPI_connect();
-  spi_enable(SPI_CLOCK_DIV16); // This will set the Linduino to have a 1MHz Clock
+  SPI_connect();
   LTC6813_init_cfg(TOTAL_IC, BMS_IC);
   LTC6813_init_cfgb(TOTAL_IC,BMS_IC);
   for (uint8_t current_ic = 0; current_ic<TOTAL_IC;current_ic++) 
